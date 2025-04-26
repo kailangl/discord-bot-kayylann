@@ -13,4 +13,6 @@ declare module 'discord-api-types' {
       discriminator: string;
       avatar: string | null;
     }
+  
   }
+
