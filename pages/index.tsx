@@ -3,9 +3,68 @@ import { useSession, signIn } from 'next-auth/react';
 import Head from 'next/head';
 import Header from '../components/Header';
 import styles from '../styles/Home.module.css';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { supabase } from '../lib/supabase';
 
 const Home: NextPage = () => {
-  const { status } = useSession();
+  const { data: session, status } = useSession();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  const handleLogin = async () => {
+    try {
+      setLoading(true);
+      await signIn('discord');
+    } catch (err) {
+      setError('Failed to login with Discord');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Lógica para redirecionar se já estiver autenticado
+  useEffect(() => {
+    if (status === 'authenticated') {
+      checkUserServers();
+    }
+  }, [status]);
+
+  const checkUserServers = async () => {
+    try {
+      setLoading(true);
+      
+      // 1. Buscar servidores do usuário
+      const userGuilds = await fetch('/api/discord/guilds', {
+        headers: {
+          'Authorization': `Bearer ${session?.accessToken}`
+        }
+      }).then(res => res.json());
+
+      // 2. Buscar servidores com o bot
+      const { data: botGuilds } = await supabase
+        .from('bot_config')
+        .select('guild_id');
+
+      // 3. Filtrar servidores disponíveis
+      const availableServers = userGuilds.filter((guild: any) => {
+        const isBotInServer = botGuilds?.some(b => b.guild_id === guild.id);
+        const hasAdminPermissions = (guild.permissions & 0x8) === 0x8 || guild.owner;
+        return isBotInServer && hasAdminPermissions;
+      });
+
+      if (availableServers.length > 0) {
+        router.push('/dashboard/servers');
+      }
+    } catch (err) {
+      console.error('Error checking servers:', err);
+      setError('Error loading server data');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -38,12 +97,29 @@ const Home: NextPage = () => {
               ADD TO SERVER
             </a>
 
-            {status !== "authenticated" && (
-              <button onClick={() => signIn('discord')} className={styles.secondaryButton}>
-                LOG IN
+            {status !== "authenticated" ? (
+              <button 
+                onClick={handleLogin}
+                disabled={loading}
+                className={styles.secondaryButton}
+              >
+                {loading ? 'LOADING...' : 'LOG IN'}
+              </button>
+            ) : (
+              <button 
+                onClick={() => router.push('/dashboard/servers')}
+                className={styles.primaryButton}
+              >
+                GO TO DASHBOARD
               </button>
             )}
           </div>
+
+          {error && (
+            <div className={styles.errorMessage}>
+              {error}
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-
+import styles from "../styles/Home.module.css";
 export const DiscordLoginButton = () => {
   const router = useRouter();
 
@@ -24,11 +24,8 @@ export const DiscordLoginButton = () => {
   };
 
   return (
-    <button 
-      onClick={handleLogin}
-      className="bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded"
-    >
-      Login com Discord
-    </button>
+       <button onClick={handleLogin} className={styles.secondaryButton}>
+                LOG IN
+              </button>
   );
 };
