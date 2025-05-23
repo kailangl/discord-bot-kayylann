@@ -154,7 +154,6 @@
     position: relative;
     z-index: 10;
     padding: 1rem 0;
-
 }
 
 .header::after {
@@ -174,6 +173,12 @@
     padding: 0 1rem;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+}
+
+.leftSection {
+    display: flex;
+    flex-direction: column;
 }
 
 .logo {
@@ -182,6 +187,46 @@
     font-weight: 700;
     margin: 0;
     letter-spacing: 0.5px;
+}
+
+.serverStatus {
+    color: #9CA3AF;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.navLinks {
+    display: flex;
+    gap: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navLink {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.navLink:hover {
+    color: #B123F3;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.username {
+    color: white;
+    font-weight: 500;
 }
 
 /* Mantém todos os estilos anteriores do Home.module.css */
