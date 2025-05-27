@@ -88,9 +88,7 @@ const Home: NextPage = () => {
             </p>
           </div>
 
-          <div className={styles.divider}>
-            <span className={styles.dividerText}>CONTINUE</span>
-          </div>
+    
 
           <div className={styles.buttons}>
             <a href="/add-to-server" className={styles.primaryButton}>

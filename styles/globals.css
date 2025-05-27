@@ -7,3 +7,11 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+@theme {
+    --color-mainbg: #11141C;
+   --color-secbg: #242830;
+   --color-mfield: #373C4D;
+   --color-vsfbg: #11141C;
+}
