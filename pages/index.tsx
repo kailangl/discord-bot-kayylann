@@ -1,126 +1,317 @@
 import type { NextPage } from 'next';
 import { useSession, signIn } from 'next-auth/react';
 import Head from 'next/head';
-import Header from '../components/Header';
-import styles from '../styles/Home.module.css';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import {
+  ChevronLeft,
+  ChevronRight,
+  ShieldCheck,
+  Cpu, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
+  Sparkles, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
+  Rocket, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
+  Users, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
+  MessageSquare, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
+  Settings,
+  TerminalSquare,
+  BotMessageSquare,
+} from 'lucide-react';
+import styles from '../styles/Home.module.css'; // Import your custom styles
+
+const carouselImages = [
+  '/images/bot-feature-1.png',
+  '/images/bot-feature-2.png',
+  '/images/bot-feature-3.png',
+];
+
+const features = [
+  {
+    icon: <BotMessageSquare size={40} className="text-purple-400" />,
+    title: 'AI-Powered Responses',
+    description: 'Engage your users with smart, contextual, and dynamic interactions.',
+  },
+  {
+    icon: <ShieldCheck size={40} className="text-blue-400" />,
+    title: 'Advanced Moderation',
+    description: 'Keep your server safe and organized with powerful moderation tools.',
+  },
+  {
+    icon: <TerminalSquare size={40} className="text-green-400" />,
+    title: 'Customizable Commands',
+    description: 'Tailor the bot to your server\'s needs with flexible and personalized commands.',
+  },
+  {
+    icon: <Settings size={40} className="text-yellow-400" />,
+    title: 'Intuitive Dashboard',
+    description: 'Easily manage all bot configurations from a centralized and user-friendly interface.',
+  },
+];
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleLogin = async () => {
     try {
       setLoading(true);
       await signIn('discord');
     } catch (err) {
-      setError('Failed to login with Discord');
+      setError('Failed to log in with Discord');
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  // Lógica para redirecionar se já estiver autenticado
   useEffect(() => {
-    if (status === 'authenticated') {
+    if (status === 'authenticated' && session?.accessToken) {
       checkUserServers();
     }
-  }, [status]);
+  }, [status, session?.accessToken]);
 
   const checkUserServers = async () => {
+    if (!session?.accessToken) {
+      setError('Access token not available.');
+      setLoading(false);
+      return;
+    }
     try {
       setLoading(true);
-      
-      // 1. Buscar servidores do usuário
-      const userGuilds = await fetch('/api/discord/guilds', {
-        headers: {
-          'Authorization': `Bearer ${session?.accessToken}`
-        }
-      }).then(res => res.json());
+      setError(null);
 
-      // 2. Buscar servidores com o bot
-      const { data: botGuilds } = await supabase
+      const userGuildsResponse = await fetch('/api/discord/guilds', {
+        headers: {
+          'Authorization': `Bearer ${session.accessToken}`
+        }
+      });
+      if (!userGuildsResponse.ok) {
+        const errorData = await userGuildsResponse.json();
+        throw new Error(errorData.error || `Failed to fetch user guilds: ${userGuildsResponse.statusText}`);
+      }
+      const userGuilds = await userGuildsResponse.json();
+
+      if (!Array.isArray(userGuilds)) {
+        console.error('User guilds is not an array:', userGuilds);
+        throw new Error('Unexpected format for user guilds.');
+      }
+
+      const { data: botGuilds, error: supabaseError } = await supabase
         .from('bot_config')
         .select('guild_id');
 
-      // 3. Filtrar servidores disponíveis
+      if (supabaseError) {
+        throw new Error(`Supabase error: ${supabaseError.message}`);
+      }
+
+      if (!botGuilds) {
+        throw new Error('Failed to fetch bot guilds from Supabase.');
+      }
+
       const availableServers = userGuilds.filter((guild: any) => {
-        const isBotInServer = botGuilds?.some(b => b.guild_id === guild.id);
-        const hasAdminPermissions = (guild.permissions & 0x8) === 0x8 || guild.owner;
+        const isBotInServer = botGuilds.some(b => b.guild_id === guild.id);
+        const administratorPermissionFlag = BigInt(8);
+        const hasAdminPermissions = (BigInt(guild.permissions) & administratorPermissionFlag) === administratorPermissionFlag || guild.owner;
         return isBotInServer && hasAdminPermissions;
       });
 
       if (availableServers.length > 0) {
         router.push('/dashboard/servers');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error checking servers:', err);
-      setError('Error loading server data');
+      setError(err.message || 'Error loading server data');
     } finally {
       setLoading(false);
     }
   };
 
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === carouselImages.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? carouselImages.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
-    <>
+    <div className="min-h-screen bg-mainbg text-gray-100">
       <Head>
         <title>Kayylann Discord Bot Dashboard</title>
-        <meta name="description" content="Dashboard de gerenciamento do bot Kayylann para Discord" />
+        <meta name="description" content="Dashboard for managing the Kayylann Discord bot" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <Header />
 
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <h1 className={styles.title}>Kayylann Discord Bot Dashboard</h1>
-
-          <div className={styles.description}>
-            <p>
-              A fully customizable server moderation Discord bot for your Discord server that features a simple and intuitive web dashboard.
-            </p>
-            <p className={styles.highlight}>
-              Dyno is used on over 10.5 million servers, we invite you to try it out and hope you enjoy!
-            </p>
-          </div>
-
-    
-
-          <div className={styles.buttons}>
-            <a href="/add-to-server" className={styles.primaryButton}>
-              ADD TO SERVER
-            </a>
-
-            {status !== "authenticated" ? (
-              <button 
-                onClick={handleLogin}
-                disabled={loading}
-                className={styles.secondaryButton}
-              >
-                {loading ? 'LOADING...' : 'LOG IN'}
-              </button>
-            ) : (
-              <button 
-                onClick={() => router.push('/dashboard/servers')}
-                className={styles.primaryButton}
-              >
-                GO TO DASHBOARD
-              </button>
-            )}
-          </div>
-
-          {error && (
-            <div className={styles.errorMessage}>
-              {error}
+      <main className="container mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <section className="py-16 md:py-24">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className={styles.title}>
+              <span className={styles.firstWord}>
+                Kayylann
+              </span>{' '}
+              Discord Bot Dashboard
+            </h1>
+            <div className="text-lg md:text-xl text-gray-300 mb-8 space-y-4">
+              <p>
+                Kayylann is a multi-purpose Discord bot that uses artificial intelligence to automate responses and make interaction more dynamic and personalized.
+              </p>
+              <p className="text-blue-300 font-medium">
+                Developed by Blayy and constantly improved. Enjoy!
+              </p>
             </div>
-          )}
-        </div>
-      </div>
-    </>
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <a
+                href="https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_CLIENT_ID&permissions=8&scope=bot%20applications.commands"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity shadow-lg"
+              >
+                ADD TO SERVER
+              </a>
+              {status !== "authenticated" ? (
+                <button
+                  onClick={handleLogin}
+                  disabled={loading || status === 'loading'}
+                  className="px-6 py-3 border-2 border-purple-500 text-white font-medium rounded-lg hover:bg-purple-900/30 transition-colors"
+                >
+                  {loading || status === 'loading' ? 'LOADING...' : 'LOG IN WITH DISCORD'}
+                </button>
+              ) : (
+                <button
+                  onClick={() => router.push('/dashboard/servers')}
+                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity"
+                  disabled={loading}
+                >
+                  {loading ? 'LOADING...' : 'GO TO DASHBOARD'}
+                </button>
+              )}
+            </div>
+
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="pb-4">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Explore Kayylann's Powers
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className=" p-6 rounded-xl hover:transform hover:-translate-y-2 transition-transform duration-300 shadow-lg"
+                >
+                  <div className="flex justify-center mb-4">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-center mb-2 text-white">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-300 text-center">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Carousel Section */}
+        <section className="py-5 my-5">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              See Kayylann in Action
+            </h2>
+            <div className="relative max-w-4xl mx-auto rounded-xl overflow-hidden">
+              <button
+                onClick={prevImage}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+                aria-label="Previous Image"
+              >
+                <ChevronLeft size={32} />
+              </button>
+              <div className="h-96 flex items-center justify-center">
+                <img
+                  src={carouselImages[currentImageIndex]}
+                  alt={`Bot feature ${currentImageIndex + 1}`}
+                  className="max-h-full max-w-full object-contain"
+                />
+              </div>
+              <button
+                onClick={nextImage}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+                aria-label="Next Image"
+              >
+                <ChevronRight size={32} />
+              </button>
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                {carouselImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-colors ${index === currentImageIndex ? 'bg-purple-500' : 'bg-gray-500'}`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Quick Start Section */}
+        <section className="py-16">
+          <div className="max-w-6xl mx-auto px-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-center mb-12">
+              Ready? Let's Get Started!
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-secbg p-6 rounded-xl text-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
+                  1
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-white">Add to Your Server</h3>
+                <p className="text-gray-300">
+                  Invite Kayylann to your Discord server with just a click.
+                </p>
+              </div>
+              <div className="bg-secbg p-6 rounded-xl text-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
+                  2
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-white">Log In</h3>
+                <p className="text-gray-300">
+                  Access the dashboard to configure and personalize your bot.
+                </p>
+              </div>
+              <div className="bg-secbg p-6 rounded-xl text-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
+                  3
+                </div>
+                <h3 className="text-xl font-semibold mb-2 text-white">Explore & Configure</h3>
+                <p className="text-gray-300">
+                  Discover all features and fine-tune Kayylann to your liking.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
   );
 };
 

@@ -1,0 +1,11 @@
+{
+  "ping": "utility",
+  "avatar": "utility",
+  "help": "utility", 
+  "ban": "moderation",
+  "kick": "moderation",
+  "clear": "moderation",
+  "balance": "economy",
+  "daily": "economy",
+  "meme": "fun"
+}

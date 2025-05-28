@@ -13,7 +13,7 @@ interface BotConfig {
   p_log_id: string | null;
   warn_limit: number | null; // Changed to allow null
   warns: any;
-  use_ai_welcome?: boolean;
+  improved_reasons?: boolean;
   // Placeholder for server info, you might fetch this differently
   server_name?: string;
   server_icon_url?: string;
@@ -62,7 +62,7 @@ export default function ConfigureBot() {
           .eq("guild_id", guildId)
           .single();
 
-        if (supabaseError && supabaseError.code !== 'PGRST116') { // PGRST116: single row not found
+        if (supabaseError && supabaseError.code !== 'PGRST116') { 
             throw supabaseError;
         }
 
@@ -71,13 +71,13 @@ export default function ConfigureBot() {
           ai_channel_id: null,
           welcome_channel_id: null,
           resposta_estatica: null,
-          resposta_ia: false, // Default for AI Improved Reasons
+          resposta_ia: false, 
           admin_role_id: null,
           p_log_id: null,
-          warn_limit: null, // Default Warn Limit to null
+          warn_limit: null, 
           warns: {},
-          use_ai_welcome: false,
-          // Add server info from dummy data or fetch it
+          improved_reasons: false,
+          
           server_name: DUMMY_SERVER_INFO.server_name,
           server_icon_url: DUMMY_SERVER_INFO.server_icon_url,
         };
@@ -96,17 +96,14 @@ export default function ConfigureBot() {
 
   const fetchChannels = async () => {
     if (!guildId) return;
-    
-    // Avoid refetching if channels are already loaded for this session
-    // You might want a more sophisticated caching or check if guildId changed
+  
     if (channels.length > 0 && !channelsLoading) {
-        // If we already have channels, maybe don't refetch unless forced
-        // For now, always refetch when opening selector, as per original logic
+       
     }
 
     try {
       setChannelsLoading(true);
-      const response = await fetch(`/api/channel_list/${guildId}/channels`); // Ensure this API endpoint is correct
+      const response = await fetch(`/api/channel_list/${guildId}/channels`); 
       if (!response.ok) throw new Error("Failed to fetch channels");
       
       const data = await response.json();
@@ -114,15 +111,15 @@ export default function ConfigureBot() {
       setChannels(textChannels);
     } catch (err) {
       console.error("Error fetching channels:", err);
-      setError("Failed to load channel list"); // Show error to user
-      setChannels([]); // Clear channels on error
+      setError("Failed to load channel list"); 
+      setChannels([]); 
     } finally {
       setChannelsLoading(false);
     }
   };
 
   const handleOpenChannelSelect = (type: ChannelFields) => {
-    // Fetch channels each time select is opened, or cache them
+    
     fetchChannels(); 
     setShowChannelSelect({ type, visible: true });
   };
@@ -131,7 +128,7 @@ export default function ConfigureBot() {
     if (!config) return;
 
     try {
-      // setLoading(true); // Optional: show loading spinner on each save
+   
       setError(null);
 
       const newConfig = { ...config, ...updates };
@@ -146,34 +143,34 @@ export default function ConfigureBot() {
       console.error("Erro ao salvar configuração:", err);
       setError(err instanceof Error ? err.message : "Erro ao salvar");
     } finally {
-      // setLoading(false);
+      
     }
   };
 
   const clearField = (field: keyof BotConfig) => {
-    // Ensure type compatibility for null assignment
+    
     const nullAssignableFields: (keyof BotConfig)[] = [
         'ai_channel_id', 'welcome_channel_id', 'resposta_estatica', 
         'admin_role_id', 'p_log_id', 'warn_limit'
     ];
     if (nullAssignableFields.includes(field)) {
-        saveConfig({ [field]: null } as any); // Use 'as any' for simplicity here or type check properly
-    } else if (field === 'use_ai_welcome' || field === 'resposta_ia') {
-        saveConfig({ [field]: false }); // Booleans might reset to false
+        saveConfig({ [field]: null } as any);
+    } else if (field === 'improved_reasons' || field === 'resposta_ia') {
+        saveConfig({ [field]: false });
     }
-    // Handle other types if necessary
+   
   };
 
 
   const handleChannelSelect = (channelId: string) => {
     saveConfig({ [showChannelSelect.type]: channelId });
-    setShowChannelSelect({ type: "ai_channel_id", visible: false }); // Reset type for safety
+    setShowChannelSelect({ type: "ai_channel_id", visible: false });
   };
 
   const getChannelName = (channelId: string | null) => {
     if (!channelId) return "";
     const channel = channels.find(c => c.id === channelId);
-    return channel ? channel.name : channelId; // Fallback to ID if name not found
+    return channel ? channel.name : channelId; 
   };
 
 
@@ -181,7 +178,7 @@ export default function ConfigureBot() {
     return <div className="text-center mt-10 text-white">Nenhum servidor selecionado</div>;
   }
 
-  if (loading && !config) { // Show initial loading spinner
+  if (loading && !config) { 
     return (
       <div className="flex justify-center items-center h-screen bg-slate-950">
         <div className="loading loading-spinner loading-lg"></div>
@@ -189,7 +186,7 @@ export default function ConfigureBot() {
     );
   }
 
-  if (error && !config) { // Show error if initial loading failed
+  if (error && !config) {
     return (
       <div className="flex justify-center items-center h-screen bg-slate-950">
         <div className="alert alert-error max-w-md mx-auto mt-8">
@@ -206,8 +203,8 @@ export default function ConfigureBot() {
 
   
      
-      <div className="max-w-6xl mx-auto"> {/* Increased max-width for two columns */}
-        {/* Header Section */}
+      <div className="max-w-6xl mx-auto">
+    
         <div className="flex flex-col sm:flex-row justify-between items-start mb-8 sm:mb-10">
           <div>
             <h1 className="text-3xl font-bold mb-1">Bot Config</h1>
@@ -290,8 +287,8 @@ export default function ConfigureBot() {
                     <input
                       type="checkbox"
                       className="sr-only peer"
-                      checked={config.use_ai_welcome || false}
-                      onChange={(e) => saveConfig({ use_ai_welcome: e.target.checked })}
+                      checked={config.resposta_ia || false}
+                      onChange={(e) => saveConfig({ resposta_ia: e.target.checked })}
                     />
                     <div className="w-11 h-6 bg-mfield rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-neutral-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                   </div>
@@ -376,8 +373,8 @@ export default function ConfigureBot() {
                     <input
                       type="checkbox"
                       className="sr-only peer"
-                      checked={config.resposta_ia || false} // Assuming 'resposta_ia' is for this feature
-                      onChange={(e) => saveConfig({ resposta_ia: e.target.checked })}
+                      checked={config.improved_reasons || false} 
+                      onChange={(e) => saveConfig({ improved_reasons: e.target.checked })}
                     />
                     <div className="w-11 h-6 bg-neutral-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-neutral-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
                   </div>
