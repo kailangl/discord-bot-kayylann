@@ -10,17 +10,16 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
-  Cpu, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
-  Sparkles, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
-  Rocket, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
-  Users, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
-  MessageSquare, // This icon is not used in the features array. It's safe to remove if not used elsewhere.
+  Cpu, 
+  Sparkles, 
+  Rocket, 
+  Users,
+  MessageSquare, 
   Settings,
   TerminalSquare,
   BotMessageSquare,
 } from 'lucide-react';
-import styles from '../styles/Home.module.css'; // Import your custom styles
-
+import styles from '../styles/Home.module.css'; 
 const carouselImages = [
   '/images/bot-feature-1.png',
   '/images/bot-feature-2.png',
@@ -278,7 +277,7 @@ const Home: NextPage = () => {
               Ready? Let's Get Started!
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-secbg p-6 rounded-xl text-center shadow-lg">
+              <div className=" p-6 rounded-xl text-center shadow-lg">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
                   1
                 </div>
@@ -287,7 +286,7 @@ const Home: NextPage = () => {
                   Invite Kayylann to your Discord server with just a click.
                 </p>
               </div>
-              <div className="bg-secbg p-6 rounded-xl text-center shadow-lg">
+              <div className=" p-6 rounded-xl text-center shadow-lg">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
                   2
                 </div>
@@ -296,7 +295,7 @@ const Home: NextPage = () => {
                   Access the dashboard to configure and personalize your bot.
                 </p>
               </div>
-              <div className="bg-secbg p-6 rounded-xl text-center shadow-lg">
+              <div className=" p-6 rounded-xl text-center shadow-lg">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-xl mx-auto mb-4">
                   3
                 </div>
