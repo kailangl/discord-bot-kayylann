@@ -10,20 +10,20 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
-  Cpu, 
-  Sparkles, 
-  Rocket, 
+  Cpu,
+  Sparkles,
+  Rocket,
   Users,
-  MessageSquare, 
+  MessageSquare,
   Settings,
   TerminalSquare,
   BotMessageSquare,
 } from 'lucide-react';
-import styles from '../styles/Home.module.css'; 
+import styles from '../styles/Home.module.css';
 const carouselImages = [
-  '/images/bot-feature-1.png',
-  '/images/bot-feature-2.png',
-  '/images/bot-feature-3.png',
+  '/images/feature1.png',
+  '/images/feature2.png',
+  '/images/feature3.png',
 ];
 
 const features = [
@@ -175,7 +175,7 @@ const Home: NextPage = () => {
                 href="https://discord.com/api/oauth2/authorize?client_id=YOUR_BOT_CLIENT_ID&permissions=8&scope=bot%20applications.commands"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-500 text-white font-medium rounded-lg hover:opacity-90 transition-opacity shadow-lg"
+                className={styles.primaryButton}
               >
                 ADD TO SERVER
               </a>
@@ -183,7 +183,7 @@ const Home: NextPage = () => {
                 <button
                   onClick={handleLogin}
                   disabled={loading || status === 'loading'}
-                  className="px-6 py-3 border-2 border-purple-500 text-white font-medium rounded-lg hover:bg-purple-900/30 transition-colors"
+                  className={styles.secondaryButton}
                 >
                   {loading || status === 'loading' ? 'LOADING...' : 'LOG IN WITH DISCORD'}
                 </button>
@@ -228,36 +228,37 @@ const Home: NextPage = () => {
           </div>
         </section>
 
-        {/* Carousel Section */}
+     
         <section className="py-5 my-5">
           <div className="max-w-6xl mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               See Kayylann in Action
             </h2>
-            <div className="relative max-w-4xl mx-auto rounded-xl overflow-hidden">
+            <div className="relative max-w-4xl mx-auto rounded-xl overflow-hidden aspect-video">
               <button
                 onClick={prevImage}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-gradient-to-r from-purple-600/50 to-blue-500/50 p-3 rounded-full hover:border-2 border-white/50 transition-colors z-10"
                 aria-label="Previous Image"
               >
-                <ChevronLeft size={32} />
+                <ChevronLeft size={32} className="text-white" />
               </button>
-              <div className="h-96 flex items-center justify-center">
+              <div className="h-full w-full flex items-center justify-center bg-gray-100">
                 <img
-                  src={carouselImages[currentImageIndex]}
-                  alt={`Bot feature ${currentImageIndex + 1}`}
-                  className="max-h-full max-w-full object-contain"
+                  src={carouselImages && carouselImages.length > 0 ? carouselImages[currentImageIndex] : 'https://via.placeholder.com/640x360'}
+                  alt={carouselImages && carouselImages.length > 0 ? `Bot feature ${currentImageIndex + 1}` : 'Placeholder image'}
+                  className="object-cover h-full w-full transition-opacity duration-500"
+                  style={{ opacity: carouselImages && carouselImages.length > 0 ? 1 : 0.5 }}
                 />
               </div>
               <button
                 onClick={nextImage}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 p-2 rounded-full hover:bg-black/70 transition-colors z-10"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-gradient-to-r from-purple-600/50 to-blue-500/50 p-3 rounded-full hover:border-2 border-white/50 hover:bg-black/70 transition-colors z-10"
                 aria-label="Next Image"
               >
-                <ChevronRight size={32} />
+                <ChevronRight size={32} className="text-white" />
               </button>
               <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                {carouselImages.map((_, index) => (
+                {carouselImages && carouselImages.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
