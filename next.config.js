@@ -12,14 +12,11 @@ const nextConfig = {
     ];
   },
   reactStrictMode: true,
-  
  
 
-  
-  serverExternalPackages: ['@discordjs/rest'],
-  
-  
   experimental: {
+    
+    serverComponentsExternalPackages: ['@discordjs/rest'],
     turbo: {
       resolveAlias: {
         
