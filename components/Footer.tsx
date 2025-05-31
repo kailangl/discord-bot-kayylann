@@ -1,8 +1,9 @@
 // components/Footer.tsx
 import React from 'react';
 import Link from 'next/link';
-import { UserSearch } from 'lucide-react'; 
+import { UserSearch } from 'lucide-react';
 import { FaDiscord } from "react-icons/fa6";
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -37,7 +38,7 @@ const Footer = () => {
           </Link>
         </div>
 
-        {/* Seção de Links Inferiores (Termos, Privacidade, Cookies) */}
+        {/* Seção de Links Inferiores (Termos, Privacidade) */}
         <nav className="flex flex-wrap justify-center items-center gap-x-6 sm:gap-x-8 gap-y-2 mb-8 text-xs sm:text-sm">
           <Link href="/terms-and-conditions" legacyBehavior>
             <a className="hover:text-white transition-colors duration-200">Terms and Conditions</a>
@@ -45,9 +46,7 @@ const Footer = () => {
           <Link href="/privacy-policy" legacyBehavior>
             <a className="hover:text-white transition-colors duration-200">Privacy Policy</a>
           </Link>
-          <Link href="/cookie-policy" legacyBehavior>
-            <a className="hover:text-white transition-colors duration-200">Cookie Policy</a>
-          </Link>
+          {/* Cookie Policy Link Removido */}
         </nav>
 
         {/* Texto de Copyright */}
