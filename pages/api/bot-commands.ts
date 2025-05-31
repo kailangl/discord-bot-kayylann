@@ -1,11 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getGlobalApplicationCommands, DiscordCommand } from '../../utils/discord-api';
 
-// Importar o mapeamento de categorias
-// Ajuste o caminho se o seu arquivo JSON estiver em outro lugar
-import commandCategoryMapData from '../../utils/commandCategoryMap.json'; // Ex: ../../../data/commandCategoryMap.json se a API está em pages/api/
 
-// Tipos (mantidos - adicionar 'category' a FormattedCommand)
+import commandCategoryMapData from '../../utils/commandCategoryMap.json';
 interface DiscordCommandOption {
     type: number;
     name: string;
@@ -34,18 +31,18 @@ interface FormattedCommand {
     name: string;
     description: string;
     usage: string;
-    category: string; // Chave da categoria (ex: "moderation")
+    category: string; 
     options?: FormattedCommandOption[];
 }
 
-enum CommandOptionType { /* ... mantido ... */ }
-const OptionTypeMap: Record<CommandOptionType, string> = { /* ... mantido ... */ };
+enum CommandOptionType {}
+const OptionTypeMap: Record<CommandOptionType, string> = { };
 
 function formatOptions(
     options: DiscordCommandOption[] | undefined,
     locale: string
 ): FormattedCommandOption[] | undefined {
-    // ... lógica mantida ...
+
     if (!options) return undefined;
 
     return options.map((option) => {
@@ -74,7 +71,7 @@ function formatOptions(
 }
 
 function generateOptionsUsage(options: FormattedCommandOption[] | undefined): string {
-    // ... lógica mantida da resposta anterior ...
+
     if (!options || options.length === 0) {
         return '';
     }
@@ -95,27 +92,25 @@ function generateUsageString(
     commandName: string,
     options: FormattedCommandOption[] | undefined
 ): string {
-    // ... lógica mantida da resposta anterior ...
+  
     return `/${commandName}` + generateOptionsUsage(options);
 }
 
-// --- LÓGICA DE CATEGORIA REVISADA (USANDO O MAPA) ---
+
 const categoryMap: Record<string, string> = commandCategoryMapData;
-// Defina uma categoria padrão CASO um comando não esteja no seu mapa.
-// Esta chave DEVE existir no seu objeto CATEGORIAS no frontend.
-const DEFAULT_API_CATEGORY_KEY = 'utility'; // Exemplo: se 'utility' é sua categoria padrão.
+
+const DEFAULT_API_CATEGORY_KEY = 'utility'; 
 
 function getCommandCategory(originalCommandName: string): string {
-    // Busca no mapa (convertendo para minúsculas para consistência, embora as chaves do JSON devam ser exatas)
+   
     const mappedCategory = categoryMap[originalCommandName.toLowerCase()];
     if (mappedCategory) {
         return mappedCategory;
     }
-    // Fallback se o comando não for encontrado no mapa (DEVE SER LOGADO!)
-    console.warn(`Comando "${originalCommandName}" não encontrado no commandCategoryMap.json. Usando categoria padrão: ${DEFAULT_API_CATEGORY_KEY}`);
+     console.warn(`Comando "${originalCommandName}" não encontrado no commandCategoryMap.json. Usando categoria padrão: ${DEFAULT_API_CATEGORY_KEY}`);
     return DEFAULT_API_CATEGORY_KEY;
 }
-// --- FIM DA LÓGICA DE CATEGORIA REVISADA ---
+
 
 export default async function handler(
     req: NextApiRequest,
@@ -148,8 +143,8 @@ export default async function handler(
                 (cmd.type === undefined || cmd.type === 1) && typeof cmd.description === 'string' && typeof cmd.name === 'string'
             )
             .map((command) => {
-                const originalName = command.name; // Nome canônico para busca no mapa
-                const category = getCommandCategory(originalName); // Obtém categoria do mapa
+                const originalName = command.name; 
+                const category = getCommandCategory(originalName); 
 
                 const displayName = command.name_localizations?.[userLocale] || originalName;
                 const description = command.description_localizations?.[userLocale] || command.description;
@@ -161,7 +156,7 @@ export default async function handler(
                     name: displayName,
                     description,
                     usage,
-                    category, // Categoria vinda DIRETAMENTE do mapeamento
+                    category, 
                     options: formattedOptions,
                 };
             });
