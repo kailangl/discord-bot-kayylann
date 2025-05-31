@@ -129,17 +129,17 @@ export default async function handler(
     const acceptLanguage = req.headers['accept-language'] || '';
     const userLocale = (typeof req.query.locale === 'string' ? req.query.locale : acceptLanguage.split(',')[0]) || 'en-US';
 
-    const NEXT_PUBLIC_DISCORD_CLIENT_ID = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
+    const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
     const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 
-    if (!NEXT_PUBLIC_DISCORD_CLIENT_ID || !DISCORD_TOKEN) {
+    if (!DISCORD_CLIENT_ID || !DISCORD_TOKEN) {
         console.error('Variáveis de ambiente não configuradas.');
         return res.status(500).json({ message: 'Configuração do servidor incompleta.' });
     }
 
     try {
         const discordCommands: DiscordCommand[] = await getGlobalApplicationCommands(
-            NEXT_PUBLIC_DISCORD_CLIENT_ID,
+            DISCORD_CLIENT_ID,
             DISCORD_TOKEN
         );
 

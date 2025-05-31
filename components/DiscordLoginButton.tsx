@@ -16,7 +16,7 @@ export const DiscordLoginButton = () => {
     ? 'https://9000-idx...cloudworkstations.dev/api/auth/callback/discord'
     : 'https://seusite.com/api/auth/callback/discord';
 
-    const clientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
+    const clientId = process.env.DISCORD_CLIENT_ID;
     const scope = encodeURIComponent('identify guilds');
 
 
