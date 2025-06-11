@@ -52,7 +52,7 @@ const Header = () => {
                   font-medium transition-all duration-200 ease-in-out
                   flex items-center gap-1.5 sm:gap-2 py-2 px-3 sm:px-4 rounded-lg text-sm
                   ${isActive
-                    ? "bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-md scale-105" // Prominent active style
+                    ? "bg-gradient-to-r from-purple-600 to-blue-500 text-white shadow-md scale-105" 
                     : "text-gray-300 hover:text-white hover:bg-white/10 focus:bg-white/10 focus:text-white outline-none"
                   }
                 `}
@@ -99,7 +99,7 @@ const Header = () => {
               className="text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-all duration-200 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400 shadow-lg hover:shadow-purple-500/30 text-sm"
             >
               <LogIn className="w-5 h-5" />
-              Sign In
+              Sign In to see all features
             </button>
           )}
         </div>
