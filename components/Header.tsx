@@ -32,10 +32,10 @@ const Header = () => {
         <Link href="/" className="text-white font-bold text-xl flex items-center gap-2 shrink-0">
           <img
             src="/logo.png"
-            alt="Kayylann Logo"
-            className="w-9 h-9" 
+            alt="Kayy Logo"
+            className="w-9 h-9 rounded-full object-cover shadow-md" 
           />
-          Kayylann
+          Kayy
           <span className="text-gray-400 font-normal text-sm sm:text-base tracking-wider">
             BOT/AI
           </span>
