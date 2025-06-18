@@ -46,7 +46,7 @@ const About: NextPage = () => {
             <div className="flex justify-center items-center">
               {/* You can add an image of Blayy or a placeholder here */}
               <img
-                src="/images/blayy-avatar.png" // Replace with an actual image path
+                src="/images/blayy.png" // Replace with an actual image path
                 alt="Blayy's Avatar"
                 className="rounded-full w-48 h-48 object-cover shadow-lg border-4 border-purple-500"
               />
