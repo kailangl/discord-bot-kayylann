@@ -1,4 +1,4 @@
-Kayylann — Dashboard Oficial
+Kayy — Dashboard Oficial
 Bem-vindo ao dashboard oficial do Kayylann, o bot para Discord que combina economia, moderação, utilitários e inteligência artificial!
 
 Aqui você pode gerenciar facilmente todas as configurações do seu servidor, personalizar comandos, acessar estatísticas e muito mais — tudo em uma interface simples e intuitiva.
