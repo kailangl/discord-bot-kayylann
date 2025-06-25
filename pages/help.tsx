@@ -183,7 +183,7 @@ const Help: NextPage = () => {
           </div>
         </section>
 
-        {/* FAQ Sections */}
+        
         <section className="py-12">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold mb-12 text-center">Frequently Asked Questions</h2>
@@ -210,7 +210,7 @@ const Help: NextPage = () => {
           </div>
         </section>
 
-        {/* Support Section */}
+     
         <section className="py-12">
           <div className="max-w-4xl mx-auto text-center">
             <div className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 p-8 rounded-xl">
@@ -236,7 +236,7 @@ const Help: NextPage = () => {
                   Email Support
                 </a>
                 <a
-                  href="https://github.com/your-repo/issues"
+                  href="https://github.com/kailangl/discord-bot-kayylann/issues"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
