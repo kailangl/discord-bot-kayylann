@@ -220,7 +220,7 @@ const Help: NextPage = () => {
               </p>
               <div className="flex flex-wrap justify-center gap-4">
                 <a
-                  href="https://discord.gg/YOUR_INVITE_CODE"
+                  href="https://discord.gg/HXKwPj4FY6"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors"
