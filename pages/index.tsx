@@ -145,8 +145,8 @@ const Home: NextPage = () => {
   return (
     <div className="min-h-screen bg-mainbg text-gray-100">
       <Head>
-        <title>Kayy Discord Bot Dashboard</title>
-        <meta name="description" content="Dashboard for managing the Kayy Discord bot" />
+        <title>Lunny Discord Bot Dashboard</title>
+        <meta name="description" content="Dashboard for managing the Lunny Discord bot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -158,13 +158,13 @@ const Home: NextPage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h1 className={styles.title}>
               <span className={styles.firstWord}>
-                Kayy
+                Lunny
               </span>{' '}
               Discord Bot Dashboard
             </h1>
             <div className="text-lg md:text-xl text-gray-300 mb-8 space-y-4">
               <p>
-                Kayy is a multi-purpose Discord bot that uses artificial intelligence to automate responses and make interaction more dynamic and personalized.
+                Lunny is a multi-purpose Discord bot that uses artificial intelligence to automate responses and make interaction more dynamic and personalized.
               </p>
               <p className="text-blue-300 font-medium">
                 Developed by Blayy and constantly improved. Enjoy!
@@ -205,7 +205,7 @@ const Home: NextPage = () => {
         <section className="pb-4">
           <div className="max-w-6xl mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              Explore Kayy's Powers
+              Explore Lunny's Powers
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {features.map((feature, index) => (
@@ -232,7 +232,7 @@ const Home: NextPage = () => {
         <section className="py-5 my-5">
           <div className="max-w-6xl mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-              See Kayy in Action
+              See Lunny in Action
             </h2>
             <div className="relative max-w-4xl mx-auto rounded-xl overflow-hidden aspect-video">
               <button
@@ -284,7 +284,7 @@ const Home: NextPage = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-white">Add to Your Server</h3>
                 <p className="text-gray-300">
-                  Invite Kayy to your Discord server with just a click.
+                  Invite Lunny to your Discord server with just a click.
                 </p>
               </div>
               <div className=" p-6 rounded-xl text-center shadow-lg">
@@ -302,7 +302,7 @@ const Home: NextPage = () => {
                 </div>
                 <h3 className="text-xl font-semibold mb-2 text-white">Explore & Configure</h3>
                 <p className="text-gray-300">
-                  Discover all features and fine-tune Kayy to your liking.
+                  Discover all features and fine-tune Lunny to your liking.
                 </p>
               </div>
             </div>

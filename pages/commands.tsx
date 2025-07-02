@@ -121,8 +121,8 @@ const CommandsPage: NextPage = () => {
         <>
             <Header />
             <Head>
-                <title>Bot Commands - Kayy</title>
-                <meta name="description" content="Explore the full list of Kayy Discord Bot commands." />
+                <title>Bot Commands - Lunny</title>
+                <meta name="description" content="Explore the full list of Lunny Discord Bot commands." />
             </Head>
 
             <div className="bg-mainbg min-h-screen text-white py-8 px-4 sm:px-6 lg:px-8">
@@ -132,7 +132,7 @@ const CommandsPage: NextPage = () => {
                             Bot <span className="text-purple-400">Commands</span>
                         </h1>
                         <p className="mt-3 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
-                            Discover all the powerful commands Kayy offers to enhance your server experience.
+                            Discover all the powerful commands Lunny offers to enhance your server experience.
                         </p>
                     </header>
 

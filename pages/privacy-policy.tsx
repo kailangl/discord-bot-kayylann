@@ -9,8 +9,8 @@ const PrivacyPolicy: NextPage = () => {
   return (
     <div className="min-h-screen bg-mainbg text-gray-100">
       <Head>
-        <title>Privacy Policy - Kayy Discord Bot</title>
-        <meta name="description" content="Privacy Policy for the Kayy Discord Bot and Dashboard" />
+        <title>Privacy Policy - Lunny Discord Bot</title>
+        <meta name="description" content="Privacy Policy for the Lunny Discord Bot and Dashboard" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -41,7 +41,7 @@ const PrivacyPolicy: NextPage = () => {
                 <FileText size={28} className="mr-3" /> Introduction
               </h2>
               <p className="text-gray-300">
-                This Privacy Policy applies to the Kayy Discord bot ("Bot") and its associated dashboard website ("Site"). It describes how we collect, use, and protect your personal information when you add our Bot to your Discord server or use our Site. By using our services, you agree to the collection and use of information in accordance with this policy.
+                This Privacy Policy applies to the Lunny Discord bot ("Bot") and its associated dashboard website ("Site"). It describes how we collect, use, and protect your personal information when you add our Bot to your Discord server or use our Site. By using our services, you agree to the collection and use of information in accordance with this policy.
               </p>
             </div>
 
@@ -75,7 +75,7 @@ const PrivacyPolicy: NextPage = () => {
                 The information we collect is used solely for the following purposes:
               </p>
               <ul className="list-disc list-inside space-y-3 mt-4 text-gray-300">
-                <li>To provide and maintain the core functionalities of the Kayy bot.</li>
+                <li>To provide and maintain the core functionalities of the Lunny bot.</li>
                 <li>To allow you to log in and manage the Bot's settings through our dashboard.</li>
                 <li>To provide customer support and respond to your inquiries.</li>
                 <li>To monitor and analyze usage to improve the user experience and the Bot's features.</li>

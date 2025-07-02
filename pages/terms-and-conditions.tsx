@@ -9,8 +9,8 @@ const TermsAndConditions: NextPage = () => {
   return (
     <div className="min-h-screen bg-mainbg text-gray-100">
       <Head>
-        <title>Terms and Conditions - Kayy Discord Bot</title>
-        <meta name="description" content="Terms and Conditions for using the Kayy Discord Bot and Dashboard" />
+        <title>Terms and Conditions - Lunny Discord Bot</title>
+        <meta name="description" content="Terms and Conditions for using the Lunny Discord Bot and Dashboard" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -41,7 +41,7 @@ const TermsAndConditions: NextPage = () => {
                 <CheckSquare size={28} className="mr-3" /> 1. Acceptance of Terms
               </h2>
               <p className="text-gray-300">
-                By adding the Kayy Discord bot ("Bot") to your Discord server, or by accessing or using our dashboard website ("Site"), you agree to be bound by these Terms and Conditions ("Terms"). If you disagree with any part of the terms, you may not access or use our services. These Terms apply to all server administrators, moderators, and users who interact with the Bot or Site.
+                By adding the Lunny Discord bot ("Bot") to your Discord server, or by accessing or using our dashboard website ("Site"), you agree to be bound by these Terms and Conditions ("Terms"). If you disagree with any part of the terms, you may not access or use our services. These Terms apply to all server administrators, moderators, and users who interact with the Bot or Site.
               </p>
             </div>
 
@@ -51,7 +51,7 @@ const TermsAndConditions: NextPage = () => {
                 <User size={28} className="mr-3" /> 2. Use of the Bot and Dashboard
               </h2>
               <p className="text-gray-300 mb-3">
-                Kayy provides a range of features including moderation, economy, and utility commands. The dashboard allows for configuration of these features.
+                Lunny provides a range of features including moderation, economy, and utility commands. The dashboard allows for configuration of these features.
               </p>
               <h3 className="text-xl font-semibold mb-2 text-gray-200">Permitted Use:</h3>
               <ul className="list-disc list-inside space-y-2 text-gray-300 mb-4">
@@ -91,7 +91,7 @@ const TermsAndConditions: NextPage = () => {
                 <Brain size={28} className="mr-3" /> 4. Intellectual Property
               </h2>
               <p className="text-gray-300">
-                The Kayy Bot, the Site, and all their original content (excluding data provided by users or Discord), features, and functionality are and will remain the exclusive property of the Kayy development team (Blayy) and its licensors. The Bot and Site are protected by copyright, trademark, and other laws. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.
+                The Lunny Bot, the Site, and all their original content (excluding data provided by users or Discord), features, and functionality are and will remain the exclusive property of the Lunny development team (Blayy) and its licensors. The Bot and Site are protected by copyright, trademark, and other laws. Our trademarks and trade dress may not be used in connection with any product or service without our prior written consent.
               </p>
             </div>
             
@@ -114,7 +114,7 @@ const TermsAndConditions: NextPage = () => {
                 <ShieldAlert size={28} className="mr-3" /> 6. Limitation of Liability
               </h2>
               <p className="text-gray-300">
-                To the fullest extent permitted by applicable law, in no event shall the Kayy development team, its affiliates, directors, employees, agents, or licensors be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Bot or Site; (ii) any conduct or content of any third party on the service; (iii) any content obtained from the service; and (iv) unauthorized access, use, or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence), or any other legal theory, whether or not we have been informed of the possibility of such damage.
+                To the fullest extent permitted by applicable law, in no event shall the Lunny development team, its affiliates, directors, employees, agents, or licensors be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Bot or Site; (ii) any conduct or content of any third party on the service; (iii) any content obtained from the service; and (iv) unauthorized access, use, or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence), or any other legal theory, whether or not we have been informed of the possibility of such damage.
               </p>
             </div>
 

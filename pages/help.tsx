@@ -27,16 +27,16 @@ const Help: NextPage = () => {
       icon: <Disc size={24} className="text-purple-400" />,
       items: [
         {
-          question: 'How do I add Kayy to my server?',
+          question: 'How do I add Lunny to my server?',
           answer: 'Click the "Add to Server" button on our homepage or use the invite link provided in your dashboard after logging in.'
         },
         {
-          question: 'What permissions does Kayy need?',
-          answer: 'Kayy requires Administrator permissions to function properly. The invite link will request these permissions automatically.'
+          question: 'What permissions does Lunny need?',
+          answer: 'Lunny requires Administrator permissions to function properly. The invite link will request these permissions automatically.'
         },
         {
           question: 'How do I access the dashboard?',
-          answer: 'Log in with Discord on our website, then select your server from the list of available servers where Kayy is present.'
+          answer: 'Log in with Discord on our website, then select your server from the list of available servers where Lunny is present.'
         }
       ]
     },
@@ -68,7 +68,7 @@ const Help: NextPage = () => {
         },
         {
           question: 'What moderation features are available?',
-          answer: 'Kayy includes spam protection, link filtering, word filters, and automatic warning systems.'
+          answer: 'Lunny includes spam protection, link filtering, word filters, and automatic warning systems.'
         },
         {
           question: 'How do I view moderation logs?',
@@ -89,8 +89,8 @@ const Help: NextPage = () => {
           answer: 'Yes! You can adjust the AI behavior, response style, and knowledge base in the dashboard settings.'
         },
         {
-          question: 'What AI model does Kayy use?',
-          answer: 'Kayy uses advanced language models from OpenAI, fine-tuned specifically for Discord interactions.'
+          question: 'What AI model does Lunny use?',
+          answer: 'Lunny uses advanced language models from OpenAI, fine-tuned specifically for Discord interactions.'
         }
       ]
     },
@@ -99,7 +99,7 @@ const Help: NextPage = () => {
       icon: <HelpCircle size={24} className="text-red-400" />,
       items: [
         {
-          question: 'Kayy isn\'t responding to commands',
+          question: 'Lunny isn\'t responding to commands',
           answer: '1. Check if the bot is online in your server\n2. Verify it has the correct permissions\n3. Ensure you\'re using slash commands (/)'
         },
         {
@@ -117,8 +117,8 @@ const Help: NextPage = () => {
   return (
     <div className="min-h-screen bg-mainbg text-gray-100">
       <Head>
-        <title>Kayy Help Center</title>
-        <meta name="description" content="Help center for the Kayy Discord bot" />
+        <title>Lunny Help Center</title>
+        <meta name="description" content="Help center for the Lunny Discord bot" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -130,7 +130,7 @@ const Help: NextPage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-extrabold mb-6">
               <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
-                Kayy
+                Lunny
               </span>{' '}
               Help Center
             </h1>
@@ -229,7 +229,7 @@ const Help: NextPage = () => {
                   Join Support Server
                 </a>
                 <a
-                  href="mailto:support@Kayy.xyz"
+                  href="mailto:support@Lunny.xyz"
                   className="flex items-center px-6 py-3 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors"
                 >
                   <Mail size={20} className="mr-2" />

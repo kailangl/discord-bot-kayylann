@@ -1,5 +1,5 @@
-Kayy — Dashboard Oficial
-Bem-vindo ao dashboard oficial do Kayylann, o bot para Discord que combina economia, moderação, utilitários e inteligência artificial!
+Lunny — Dashboard Oficial
+Bem-vindo ao dashboard oficial do Lunnylann, o bot para Discord que combina economia, moderação, utilitários e inteligência artificial!
 
 Aqui você pode gerenciar facilmente todas as configurações do seu servidor, personalizar comandos, acessar estatísticas e muito mais — tudo em uma interface simples e intuitiva.
 
@@ -17,7 +17,7 @@ Visualize relatórios e estatísticas do uso do bot.
 Como usar
 Faça login com sua conta Discord.
 
-Selecione o servidor onde o Kayylann está adicionado.
+Selecione o servidor onde o Lunnylann está adicionado.
 
 Navegue pelas seções para ajustar as configurações desejadas.
 
