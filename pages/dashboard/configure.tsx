@@ -8,13 +8,13 @@ interface BotConfig {
   ai_channel_id: string | null;
   welcome_channel_id: string | null;
   resposta_estatica: string | null;
-  resposta_ia: boolean; // Used for "AI Improved Reasons" toggle
+  resposta_ia: boolean; 
   admin_role_id: string | null;
   p_log_id: string | null;
-  warn_limit: number | null; // Changed to allow null
+  warn_limit: number | null;
   warns: any;
   improved_reasons?: boolean;
-  // Placeholder for server info, you might fetch this differently
+
   server_name?: string;
   server_icon_url?: string;
 }
@@ -22,17 +22,17 @@ interface BotConfig {
 interface DiscordChannel {
   id: string;
   name: string;
-  type: number; // 0 for text, 2 for voice, etc.
+  type: number; 
 }
 
 type ChannelFields = 'ai_channel_id' | 'welcome_channel_id' | 'p_log_id';
 
-// Placeholder server data (replace with actual data fetching if needed)
-const DUMMY_SERVER_INFO = {
-  server_name: "Dono Server", // Example name
-  server_icon_url: "https://cdn.discordapp.com/embed/avatars/0.png", // Example icon
-  user_role: "Dono" // Example role
-};
+
+/*const DUMMY_SERVER_INFO = {
+  server_name: "Dono Server", 
+  server_icon_url: "https://cdn.discordapp.com/embed/avatars/0.png", 
+  user_role: "Dono" 
+}; */
 
 
 export default function ConfigureBot() {
@@ -78,8 +78,7 @@ export default function ConfigureBot() {
           warns: {},
           improved_reasons: false,
           
-          server_name: DUMMY_SERVER_INFO.server_name,
-          server_icon_url: DUMMY_SERVER_INFO.server_icon_url,
+         
         };
 
         setConfig(data || defaultConfig);
@@ -211,17 +210,8 @@ export default function ConfigureBot() {
             <p className="text-gray-400 text-sm">configure the bot to your preference</p>
           </div>
           <div className="flex items-center space-x-3 mt-4 sm:mt-0">
-            <img 
-                src={config?.server_icon_url || DUMMY_SERVER_INFO.server_icon_url} 
-                alt="Server Icon" 
-                className="w-12 h-12 rounded-full bg-neutral-700 object-cover"
-            />
-            <div>
-              <p className="font-semibold text-lg">{config?.server_name || DUMMY_SERVER_INFO.server_name}</p>
-              <p className="text-sm text-gray-400">{DUMMY_SERVER_INFO.user_role}</p>
-            </div>
-            {/* Ban button from image - not implemented as it's out of form scope */}
-            {/* <button className="btn btn-sm bg-red-600 hover:bg-red-700 text-white ml-4">Ban</button> */}
+            
+           
           </div>
         </div>
 

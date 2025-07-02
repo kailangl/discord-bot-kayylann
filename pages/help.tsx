@@ -46,15 +46,11 @@ const Help: NextPage = () => {
       items: [
         {
           question: 'What are the basic commands?',
-          answer: 'Try /help in your server to see all available commands. Common ones include /ping, /stats, and /config.'
+          answer: 'Try /help in your server to see all available commands.'
         },
         {
-          question: 'How do I set up auto-responses?',
-          answer: 'Use the /response add command or configure them in the dashboard under the "Auto-Responses" section.'
-        },
-        {
-          question: 'Can I create custom commands?',
-          answer: 'Yes! Use the /command create command or set them up in the dashboard under "Custom Commands".'
+          question: 'How do I set up ai-chat?',
+          answer: 'Use the /set-ai-chat command or configure them in the dashboard.'
         }
       ]
     },
@@ -69,10 +65,6 @@ const Help: NextPage = () => {
         {
           question: 'What moderation features are available?',
           answer: 'Lunny includes spam protection, link filtering, word filters, and automatic warning systems.'
-        },
-        {
-          question: 'How do I view moderation logs?',
-          answer: 'Use the /modlogs command or check the "Moderation Logs" section in your dashboard.'
         }
       ]
     },
@@ -90,7 +82,7 @@ const Help: NextPage = () => {
         },
         {
           question: 'What AI model does Lunny use?',
-          answer: 'Lunny uses advanced language models from OpenAI, fine-tuned specifically for Discord interactions.'
+          answer: 'Lunny uses advanced language models from OpenAI, Claude, Gemini, Deepseek fine-tuned specifically for Discord interactions.'
         }
       ]
     },
@@ -152,7 +144,6 @@ const Help: NextPage = () => {
           </div>
         </section>
 
-        {/* Help Categories */}
         <section className="py-12">
           <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl font-bold mb-8 text-center">Browse by Category</h2>

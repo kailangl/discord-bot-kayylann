@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
@@ -19,6 +18,16 @@ const Header = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+
+  const handleLogin = async () => {
+    try {
+      await signIn('discord'); 
+    } catch (err) {
+      console.error("Error during Discord sign-in:", err);
+ 
+    }
+  };
 
   const navItems = [
     { href: "/", label: "Home", icon: <HomeIcon className="w-4 h-4" /> },
@@ -75,7 +84,7 @@ const Header = () => {
           <Link href="/" className="text-white font-bold text-xl flex items-center gap-2 shrink-0">
             <img
               src="/logo.png"
-              alt="Lunny Logo 1"
+              alt="Lunny Logo"
               className="w-9 h-9 rounded-full object-cover shadow-md"
             />
             Lunny
@@ -115,7 +124,7 @@ const Header = () => {
             ) : (
               <div className="hidden md:block">
                 <button
-                  onClick={() => signIn()}
+                  onClick={handleLogin} 
                   className="text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-all duration-200 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400 shadow-lg hover:shadow-purple-500/30 text-sm"
                 >
                   <LogIn className="w-5 h-5" />
@@ -171,13 +180,10 @@ const Header = () => {
                 </button>
               </>
             ) : (
-               <>
+              <>
                 <div className="border-t border-white/10 my-3"></div>
                 <button
-                  onClick={() => {
-                    signIn();
-                    setIsMenuOpen(false);
-                  }}
+                  onClick={handleLogin} 
                   className="w-full text-white font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400 shadow-lg text-sm"
                 >
                   <LogIn className="w-5 h-5" />

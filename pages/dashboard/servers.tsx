@@ -15,7 +15,7 @@ export default function ServerDashboard() {
   if (status === 'loading') return <div>Carregando...</div>;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
+    <div>
       <ServerSelector />
     </div>
   );
