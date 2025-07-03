@@ -159,7 +159,7 @@ const Home: NextPage = () => {
    
         <section className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
-        <AdBanner />
+  <script type='text/javascript' src='//pl27067393.profitableratecpm.com/1c/b7/fc/1cb7fc5ba67e8e053770f85be1494141.js'></script>
             <h1 className={styles.title}>
               <span className={styles.firstWord}>
                 Lunny
