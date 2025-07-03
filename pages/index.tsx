@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import AdBanner from '../components/AdBanner';
+
 import {
   ChevronLeft,
   ChevronRight,
@@ -52,18 +52,7 @@ const features = [
 ];
 
 const Home: NextPage = () => {
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = '//pl27067393.profitableratecpm.com/1c/b7/fc/1cb7fc5ba67e8e053770f85be1494141.js'
-    script.defer = true
-    script.async = true
-    document.body.appendChild(script)
 
-    return () => {
-    
-      document.body.removeChild(script)
-    }
-  }, [])
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -172,7 +161,7 @@ const Home: NextPage = () => {
         <section className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
             <body>
-<div id="ad-container" />
+
             </body>
   
             <h1 className={styles.title}>
