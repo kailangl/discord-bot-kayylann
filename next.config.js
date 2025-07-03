@@ -39,7 +39,7 @@ const nextConfig = {
       }
     ];
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   experimental: {
     serverComponentsExternalPackages: ["@discordjs/rest"],
     turbo: {
