@@ -1,8 +1,7 @@
-// components/AdsterraAd.tsx
-import { useEffect } from 'react';
+// components/AdsterraAdFixed.tsx
+import { useEffect, useState } from 'react';
 import Script from 'next/script';
 
-// 1. Declaração de tipos para o objeto window
 declare global {
   interface Window {
     atOptions?: {
@@ -15,33 +14,61 @@ declare global {
   }
 }
 
-export default function AdsterraAd() {
+export default function AdsterraAdFixed() {
+  const [adLoaded, setAdLoaded] = useState(false);
+
   useEffect(() => {
+    // Verifica se o anúncio foi injetado
+    const checkAd = () => {
+      const adContainer = document.getElementById('adsterra-ad-container');
+      if (adContainer && adContainer.children.length > 1) {
+        setAdLoaded(true);
+      }
+    };
+
+    // Força recarregamento se necessário
     const reloadAd = () => {
-      if (typeof window !== 'undefined' && window.atOptions) {
-        try {
-          const existingAd = document.getElementById('adsterra-ad-container');
-          if (existingAd) existingAd.innerHTML = '';
-          
+      if (window.atOptions) {
+        const container = document.getElementById('adsterra-ad-container');
+        if (container) {
+          container.innerHTML = '';
           const script = document.createElement('script');
           script.src = `https://www.highperformanceformat.com/${window.atOptions.key}/invoke.js`;
           script.async = true;
-          document.getElementById('adsterra-ad-container')?.appendChild(script);
-        } catch (error) {
-          console.error('Adsterra reload error:', error);
+          container.appendChild(script);
         }
       }
     };
 
+    // Configura observers e listeners
+    const observer = new MutationObserver(checkAd);
+    const container = document.getElementById('adsterra-ad-container');
+    if (container) {
+      observer.observe(container, { childList: true });
+    }
+
+    const timer = setTimeout(checkAd, 3000);
     window.addEventListener('focus', reloadAd);
-    
+
     return () => {
+      observer.disconnect();
+      clearTimeout(timer);
       window.removeEventListener('focus', reloadAd);
     };
   }, []);
 
   return (
-    <div className="adsterra-ad-wrapper" style={{ minHeight: '250px', margin: '20px 0' }}>
+    <div style={{
+      minHeight: '250px',
+      width: '100%',
+      position: 'relative',
+      border: adLoaded ? 'none' : '1px dashed #ccc',
+      backgroundColor: adLoaded ? 'transparent' : '#f5f5f5',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: '20px 0'
+    }}>
       {/* Configuração do Adsterra */}
       <Script
         id="adsterra-config"
@@ -59,19 +86,31 @@ export default function AdsterraAd() {
         }}
       />
       
-      {/* Container do anúncio */}
-      <div id="adsterra-ad-container">
-        <div style={{
-          backgroundColor: '#f0f0f0',
-          color: '#333',
-          padding: '20px',
-          textAlign: 'center',
-          borderRadius: '4px'
-        }}>
-          Carregando anúncio...
-        </div>
+      {/* Container principal */}
+      <div id="adsterra-ad-container" style={{
+        width: '100%',
+        height: '100%',
+        display: adLoaded ? 'block' : 'none'
+      }}>
+        {/* Fallback que some quando o anúncio carrega */}
+        {!adLoaded && (
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            color: '#666',
+            fontSize: '14px'
+          }}>
+            Carregando anúncio...
+          </div>
+        )}
       </div>
-      
+
       {/* Script de carregamento */}
       <Script
         id="adsterra-load"
@@ -79,11 +118,19 @@ export default function AdsterraAd() {
         dangerouslySetInnerHTML={{
           __html: `
             (function() {
-              const container = document.getElementById('adsterra-ad-container');
+              var container = document.getElementById('adsterra-ad-container');
               if (container && window.atOptions) {
-                const script = document.createElement('script');
+                var script = document.createElement('script');
                 script.src = 'https://www.highperformanceformat.com/' + window.atOptions.key + '/invoke.js';
                 script.async = true;
+                
+                // Verificação adicional de carregamento
+                script.onload = function() {
+                  if (container) {
+                    container.style.display = 'block';
+                  }
+                };
+                
                 container.appendChild(script);
               }
             })();
