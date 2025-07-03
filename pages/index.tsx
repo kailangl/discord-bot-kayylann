@@ -27,7 +27,18 @@ const carouselImages = [
   '/images/feature2.png',
   '/images/feature3.png',
 ];
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = '//pl27067393.profitableratecpm.com/1c/b7/fc/1cb7fc5ba67e8e053770f85be1494141.js'
+    script.defer = true
+    script.async = true
+    document.body.appendChild(script)
 
+    return () => {
+    
+      document.body.removeChild(script)
+    }
+  }, [])
 const features = [
   {
     icon: <BotMessageSquare size={40} className="text-purple-400" />,
@@ -159,7 +170,7 @@ const Home: NextPage = () => {
    
         <section className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
-  <script type='text/javascript' src='//pl27067393.profitableratecpm.com/1c/b7/fc/1cb7fc5ba67e8e053770f85be1494141.js'></script>
+  <div id="ad-container" />
             <h1 className={styles.title}>
               <span className={styles.firstWord}>
                 Lunny
