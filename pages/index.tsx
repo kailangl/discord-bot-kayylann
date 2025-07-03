@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import AdBanner from '@/components/AdBanner';
+
 import {
   ChevronLeft,
   ChevronRight,
@@ -159,7 +159,7 @@ const Home: NextPage = () => {
    
         <section className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
-              <AdBanner />
+        
             <h1 className={styles.title}>
               <span className={styles.firstWord}>
                 Lunny
