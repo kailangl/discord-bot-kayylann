@@ -27,18 +27,7 @@ const carouselImages = [
   '/images/feature2.png',
   '/images/feature3.png',
 ];
-  useEffect(() => {
-    const script = document.createElement('script')
-    script.src = '//pl27067393.profitableratecpm.com/1c/b7/fc/1cb7fc5ba67e8e053770f85be1494141.js'
-    script.defer = true
-    script.async = true
-    document.body.appendChild(script)
-
-    return () => {
-    
-      document.body.removeChild(script)
-    }
-  }, [])
+  
 const features = [
   {
     icon: <BotMessageSquare size={40} className="text-purple-400" />,
@@ -63,6 +52,18 @@ const features = [
 ];
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    const script = document.createElement('script')
+    script.src = '//pl27067393.profitableratecpm.com/1c/b7/fc/1cb7fc5ba67e8e053770f85be1494141.js'
+    script.defer = true
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+    
+      document.body.removeChild(script)
+    }
+  }, [])
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
