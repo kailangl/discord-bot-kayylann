@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { supabase } from '../lib/supabase';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Script from 'next/script';
+import AdBanner from '@/components/AdBanner';
 import {
   ChevronLeft,
   ChevronRight,
@@ -21,7 +21,7 @@ import {
   BotMessageSquare,
 } from 'lucide-react';
 import styles from '../styles/Home.module.css';
-import AdComponent from '@/components/AdComponent';
+
 const carouselImages = [
   '/images/feature1.png',
   '/images/feature2.png',
@@ -156,7 +156,7 @@ const Home: NextPage = () => {
       <Header />
 
       <main className="container mx-auto px-4 py-8">
-   <AdComponent />
+   <AdBanner />
         <section className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
               
@@ -167,7 +167,7 @@ const Home: NextPage = () => {
               Discord Bot Dashboard
             </h1>
             <div className="text-lg md:text-xl text-gray-300 mb-8 space-y-4">
-              <AdComponent />
+            
               <p>
                 Lunny is a multi-purpose Discord bot that uses artificial intelligence to automate responses and make interaction more dynamic and personalized.
               </p>
@@ -208,7 +208,7 @@ const Home: NextPage = () => {
 
         {/* Features Section */}
         <section className="pb-4">
-          <AdComponent />
+        
           <div className="max-w-6xl mx-auto px-4">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
               Explore Lunny's Powers
