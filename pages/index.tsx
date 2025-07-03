@@ -160,9 +160,6 @@ const Home: NextPage = () => {
    
         <section className="py-16 md:py-24">
           <div className="max-w-4xl mx-auto text-center">
-            <body>
-
-            </body>
   
             <h1 className={styles.title}>
               <span className={styles.firstWord}>

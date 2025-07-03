@@ -14,7 +14,7 @@ export const DiscordLoginButton = () => {
     ? 'http://localhost:3000/api/auth/callback/discord'
     : isFirebaseEmulator
     ? 'https://9000-idx...cloudworkstations.dev/api/auth/callback/discord'
-    : 'https://seusite.com/api/auth/callback/discord';
+    : 'https://lunny.xyz/api/auth/callback/discord';
 
     const clientId = process.env.DISCORD_CLIENT_ID;
     const scope = encodeURIComponent('identify guilds');
