@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header";
 import styles from "../../styles/Home.module.css";
 
-// Import Lucide React Icons
+
 import {
   Settings,
   Shield,
@@ -25,7 +25,7 @@ import {
   Users,
   ZapOff,
   Gavel,
-  Crown, // Ícone já importado, perfeito!
+  Crown,
   Scale,
 } from "lucide-react";
 
@@ -51,13 +51,11 @@ interface DiscordChannel {
   type: number;
 }
 
-// NOVA INTERFACE PARA CARGOS
 interface DiscordRole {
   id: string;
   name: string;
   color: number;
 }
-
 
 type ChannelFields = 'ai_channel_id' | 'welcome_channel_id' | 'p_log_id';
 
@@ -68,22 +66,18 @@ export default function ConfigureBot() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  
   const [showChannelSelect, setShowChannelSelect] = useState<{
     type: ChannelFields;
     visible: boolean;
   }>({ type: "ai_channel_id", visible: false });
   const [channels, setChannels] = useState<DiscordChannel[]>([]);
   const [channelsLoading, setChannelsLoading] = useState(false);
-  
 
   const [showOffenseDetectorSelect, setShowOffenseDetectorSelect] = useState(false);
 
- 
   const [showRoleSelect, setShowRoleSelect] = useState(false);
   const [roles, setRoles] = useState<DiscordRole[]>([]);
   const [rolesLoading, setRolesLoading] = useState(false);
-
 
   const offenseLevels = [
     { value: 0, label: "Disabled", description: "Offense detection is inactive. No messages will be checked.", icon: <Ban size={18} className="mr-2 text-gray-400" /> },
@@ -112,7 +106,6 @@ export default function ConfigureBot() {
     }
   }, [guildId, channels.length, showChannelSelect.visible]);
 
-
   const fetchRoles = useCallback(async () => {
     if (!guildId) return;
     if (roles.length > 0) return; 
@@ -131,7 +124,6 @@ export default function ConfigureBot() {
         setRolesLoading(false);
     }
   }, [guildId, roles.length]);
-
 
   useEffect(() => {
     if (!guildId) return;
@@ -163,8 +155,6 @@ export default function ConfigureBot() {
         };
 
         setConfig(data || defaultConfig);
-
-      
         await Promise.all([fetchChannels(), fetchRoles()]);
 
       } catch (err) {
@@ -183,7 +173,6 @@ export default function ConfigureBot() {
     setShowChannelSelect({ type, visible: true });
   };
 
-  
   const handleOpenRoleSelect = () => {
       fetchRoles(); 
       setShowRoleSelect(true);
@@ -222,7 +211,6 @@ export default function ConfigureBot() {
     setShowChannelSelect({ type: "ai_channel_id", visible: false });
   };
 
- 
   const handleRoleSelect = (roleId: string) => {
     saveConfig({ admin_role_id: roleId });
     setShowRoleSelect(false);
@@ -239,7 +227,6 @@ export default function ConfigureBot() {
     return channel ? channel.name : channelId;
   };
   
-  
   const getRoleName = (roleId: string | null) => {
       if (!roleId) return "";
       const role = roles.find(r => r.id === roleId);
@@ -251,7 +238,6 @@ export default function ConfigureBot() {
     const found = offenseLevels.find(o => o.value === level);
     return found ? found.label : "Unknown";
   };
-
 
   if (!guildId) {
     return <div className="text-center mt-10 text-white">No server selected</div>;
@@ -281,14 +267,10 @@ export default function ConfigureBot() {
       <Header />
       <div className="bg-mainbg min-h-screen text-white p-4 md:p-8">
         <div className="max-w-6xl mx-auto">
-       
           <div className="flex flex-col sm:flex-row justify-between items-start mb-8 sm:mb-10">
             <div>
               <h1 className={styles.title}>Server <span className={styles.firstWord}>Configuration</span></h1>
               <p className="text-gray-400 text-sm">Configure the bot for your server</p>
-            </div>
-            <div className="flex items-center space-x-3 mt-4 sm:mt-0">
-              
             </div>
           </div>
 
@@ -301,42 +283,56 @@ export default function ConfigureBot() {
 
           {config && (
             <div className="md:flex md:space-x-6 lg:space-x-8 space-y-8 md:space-y-0">
-          
-              <div className="bg-black/20 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 rounded-xl p-6 md:w-1/2 flex flex-col space-y-6 shadow-lg">
+              {/* General Settings Card */}
+              <div className="bg-black/20 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 rounded-xl p-4 sm:p-6 md:w-1/2 flex flex-col space-y-6 shadow-lg">
                 <h2 className="text-xl font-semibold mb-0 text-gray-100 flex items-center pb-4">
                     <Settings size={22} className="mr-2" />
                     <span className="bg-gradient-to-r from-[#B123F3] to-[#2684FF] bg-clip-text text-transparent">General Settings</span>
                 </h2>
-          
 
                 <div>
-                    <label className=" font-medium mb-1 text-gray-300 flex items-center">
+                    <label className="font-medium mb-1 text-gray-300 flex items-center">
                       <MessageSquareText size={16} className="mr-1 text-purple-400" /> AI CHANNEL:
                     </label>
-                    <div className="relative flex items-center gap-2">
+                    <div className="relative flex items-center gap-1">
                       <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
                         <Hash size={18} />
                       </div>
                       <input
                         type="text"
-                        readOnly value={getChannelName(config.ai_channel_id) || ""}
+                        readOnly 
+                        value={getChannelName(config.ai_channel_id) || ""}
                         onClick={() => handleOpenChannelSelect('ai_channel_id')}
-                        className="input input-bordered bg-black/30 pl-10 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500"
+                        className="input input-bordered bg-black/30 pl-10 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base"
                         placeholder="Not Selected"
                       />
-                      <button onClick={() => clearField('ai_channel_id')} className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-2 h-10 flex items-center" disabled={!config.ai_channel_id}><X size={20} /></button>
-                      <button onClick={() => handleOpenChannelSelect('ai_channel_id')} className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-2 h-10 flex items-center" disabled={channelsLoading && showChannelSelect.type === 'ai_channel_id'}>
-                        {(channelsLoading && showChannelSelect.type === 'ai_channel_id') ? <span className="loading loading-spinner loading-xs"></span> : <ChevronDown size={20} />}
+                      {config.ai_channel_id && (
+                        <button 
+                          onClick={() => clearField('ai_channel_id')} 
+                          className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-1 sm:p-2 h-10 flex items-center"
+                        >
+                          <X size={18} />
+                        </button>
+                      )}
+                      <button 
+                        onClick={() => handleOpenChannelSelect('ai_channel_id')} 
+                        className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-1 sm:p-2 h-10 flex items-center" 
+                        disabled={channelsLoading && showChannelSelect.type === 'ai_channel_id'}
+                      >
+                        {(channelsLoading && showChannelSelect.type === 'ai_channel_id') ? (
+                          <span className="loading loading-spinner loading-xs"></span>
+                        ) : (
+                          <ChevronDown size={18} />
+                        )}
                       </button>
                     </div>
                 </div>
 
-                {/* WELCOME CHANNEL */}
                 <div>
-                    <label className=" font-medium mb-1 text-gray-300 flex items-center">
+                    <label className="font-medium mb-1 text-gray-300 flex items-center">
                       <Users size={16} className="mr-1 text-blue-400" /> WELCOME CHANNEL:
                     </label>
-                    <div className="relative flex items-center gap-2">
+                    <div className="relative flex items-center gap-1">
                       <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
                         <Hash size={18} />
                       </div>
@@ -345,17 +341,31 @@ export default function ConfigureBot() {
                         readOnly
                         value={getChannelName(config.welcome_channel_id) || ""}
                         onClick={() => handleOpenChannelSelect('welcome_channel_id')}
-                        className="input input-bordered bg-black/30 pl-10 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500"
+                        className="input input-bordered bg-black/30 pl-10 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base"
                         placeholder="Not Selected"
                       />
-                      <button onClick={() => clearField('welcome_channel_id')} className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-2 h-10 flex items-center" disabled={!config.welcome_channel_id}><X size={20} /></button>
-                      <button onClick={() => handleOpenChannelSelect('welcome_channel_id')} className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-2 h-10 flex items-center" disabled={channelsLoading && showChannelSelect.type === 'welcome_channel_id'}>
-                        {(channelsLoading && showChannelSelect.type === 'welcome_channel_id') ? <span className="loading loading-spinner loading-xs"></span> : <ChevronDown size={20} />}
+                      {config.welcome_channel_id && (
+                        <button 
+                          onClick={() => clearField('welcome_channel_id')} 
+                          className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-1 sm:p-2 h-10 flex items-center"
+                        >
+                          <X size={18} />
+                        </button>
+                      )}
+                      <button 
+                        onClick={() => handleOpenChannelSelect('welcome_channel_id')} 
+                        className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-1 sm:p-2 h-10 flex items-center" 
+                        disabled={channelsLoading && showChannelSelect.type === 'welcome_channel_id'}
+                      >
+                        {(channelsLoading && showChannelSelect.type === 'welcome_channel_id') ? (
+                          <span className="loading loading-spinner loading-xs"></span>
+                        ) : (
+                          <ChevronDown size={18} />
+                        )}
                       </button>
                     </div>
                 </div>
 
-                {/* WELCOME MESSAGE WITH AI TOGGLE */}
                 <div className="flex items-center justify-between pt-1">
                     <div className="flex-grow">
                       <span className="text-sm font-medium text-gray-300 flex items-center">
@@ -376,52 +386,56 @@ export default function ConfigureBot() {
                     </label>
                 </div>
 
-                {/* STATIC MESSAGE */}
                 <div>
-                    <label className=" font-medium mb-1 text-gray-300 flex items-center">
+                    <label className="font-medium mb-1 text-gray-300 flex items-center">
                       <Send size={16} className="mr-1 text-teal-400" /> STATIC MESSAGE:
                     </label>
                     <textarea
                       value={config.resposta_estatica || ''}
                       onChange={(e) => saveConfig({ resposta_estatica: e.target.value || null })}
-                      className="textarea textarea-bordered bg-black/30 w-full h-24 text-white placeholder-gray-500 focus:ring-purple-500 focus:border-purple-500 custom-scrollbar"
+                      className="textarea textarea-bordered bg-black/30 w-full h-24 text-white placeholder-gray-500 focus:ring-purple-500 focus:border-purple-500 custom-scrollbar text-sm sm:text-base"
                       placeholder="Write the static welcome response..."
                     ></textarea>
                 </div>
               </div>
 
               {/* Moderation Settings Card */}
-              <div className="bg-black/20 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 rounded-xl p-6 md:w-1/2 flex flex-col space-y-6 shadow-lg">
+              <div className="bg-black/20 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 rounded-xl p-4 sm:p-6 md:w-1/2 flex flex-col space-y-6 shadow-lg">
                 <h2 className="text-xl font-semibold mb-0 text-gray-100 flex items-center pb-4">
                     <Shield size={22} className="mr-2" />
                     <span className="bg-gradient-to-r from-[#B123F3] to-[#2684FF] bg-clip-text text-transparent">Moderation Settings</span>
                 </h2>
-                {/* ... (WARNS LIMIT, PUNISHMENTS LOG, e outros campos de moderação permanecem os mesmos, exceto ADMIN ROLE) */}
-                {/* WARNS LIMIT */}
+
                 <div>
-                  <label className=" font-medium mb-1 text-gray-300 flex items-center">
+                  <label className="font-medium mb-1 text-gray-300 flex items-center">
                     <Scale size={16} className="mr-1 text-yellow-400" /> WARNS LIMIT:
                   </label>
-                  <div className="relative flex items-center gap-2">
+                  <div className="relative flex items-center gap-1">
                     <input
                       type="number"
                       value={config.warn_limit === null ? '' : config.warn_limit}
                       onChange={(e) => saveConfig({ warn_limit: e.target.value === '' ? null : Number(e.target.value) })}
-                      className="input input-bordered bg-black/30 rounded-lg flex-1 h-10 text-white placeholder-gray-500 focus:ring-purple-500 focus:border-purple-500"
+                      className="input input-bordered bg-black/30 rounded-lg flex-1 h-10 text-white placeholder-gray-500 focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base"
                       placeholder="NULL"
                       min="1"
                       max="100"
                     />
-                    <button onClick={() => clearField('warn_limit')} className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-2 h-10 flex items-center" disabled={config.warn_limit === null}><X size={20} /></button>
+                    {config.warn_limit !== null && (
+                      <button 
+                        onClick={() => clearField('warn_limit')} 
+                        className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-1 sm:p-2 h-10 flex items-center"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
                   </div>
                 </div>
 
-                {/* PUNISHMENTS LOGS CHANNEL */}
                 <div>
-                  <label className=" font-medium mb-1 text-gray-300 flex items-center">
+                  <label className="font-medium mb-1 text-gray-300 flex items-center">
                     <Gavel size={16} className="mr-1 text-red-400" /> PUNISHMENTS LOGS CHANNEL:
                   </label>
-                  <div className="relative flex items-center gap-2">
+                  <div className="relative flex items-center gap-1">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
                       <Hash size={18} />
                     </div>
@@ -430,45 +444,72 @@ export default function ConfigureBot() {
                       readOnly
                       value={getChannelName(config.p_log_id) || ""}
                       onClick={() => handleOpenChannelSelect('p_log_id')}
-                      className="input input-bordered bg-black/30 pl-10 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500"
+                      className="input input-bordered bg-black/30 pl-10 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base"
                       placeholder="Not Selected"
                     />
-                    <button onClick={() => clearField('p_log_id')} className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-2 h-10 flex items-center" disabled={!config.p_log_id}><X size={20} /></button>
-                    <button onClick={() => handleOpenChannelSelect('p_log_id')} className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-2 h-10 flex items-center" disabled={channelsLoading && showChannelSelect.type === 'p_log_id'}>
-                      {(channelsLoading && showChannelSelect.type === 'p_log_id') ? <span className="loading loading-spinner loading-xs"></span> : <ChevronDown size={20} />}
+                    {config.p_log_id && (
+                      <button 
+                        onClick={() => clearField('p_log_id')} 
+                        className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-1 sm:p-2 h-10 flex items-center"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
+                    <button 
+                      onClick={() => handleOpenChannelSelect('p_log_id')} 
+                      className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-1 sm:p-2 h-10 flex items-center" 
+                      disabled={channelsLoading && showChannelSelect.type === 'p_log_id'}
+                    >
+                      {(channelsLoading && showChannelSelect.type === 'p_log_id') ? (
+                        <span className="loading loading-spinner loading-xs"></span>
+                      ) : (
+                        <ChevronDown size={18} />
+                      )}
                     </button>
                   </div>
                 </div>
 
-                {/* ===== ADMIN ROLE (MODIFICADO) ===== */}
                 <div>
-                  <label className=" font-medium mb-1 text-gray-300 flex items-center">
+                  <label className="font-medium mb-1 text-gray-300 flex items-center">
                     <Crown size={16} className="mr-1 text-purple-400" /> ADMIN ROLE:
                   </label>
-                  <div className="relative flex items-center gap-2">
+                  <div className="relative flex items-center gap-1">
                     <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
-                        {/* Adiciona um ponto colorido para o cargo */}
-                        {config.admin_role_id && roles.find(r => r.id === config.admin_role_id)?.color ? 
-                            <div className="w-3 h-3 rounded-full" style={{backgroundColor: `#${roles.find(r => r.id === config.admin_role_id)?.color.toString(16).padStart(6, '0')}`}}></div>
-                            : <Crown size={18} />
-                        }
+                      {config.admin_role_id && roles.find(r => r.id === config.admin_role_id)?.color ? 
+                        <div className="w-3 h-3 rounded-full" style={{backgroundColor: `#${roles.find(r => r.id === config.admin_role_id)?.color.toString(16).padStart(6, '0')}`}}></div>
+                        : <Crown size={18} />
+                      }
                     </div>
                     <input
                       type="text"
                       readOnly
                       value={getRoleName(config.admin_role_id) || ""}
                       onClick={handleOpenRoleSelect}
-                      className="input input-bordered bg-black/30 pl-10 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500"
+                      className="input input-bordered bg-black/30 pl-10 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base"
                       placeholder="Not Selected"
                     />
-                    <button onClick={() => clearField('admin_role_id')} className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-2 h-10 flex items-center" disabled={!config.admin_role_id}><X size={20} /></button>
-                    <button onClick={handleOpenRoleSelect} className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-2 h-10 flex items-center" disabled={rolesLoading}>
-                      {rolesLoading ? <span className="loading loading-spinner loading-xs"></span> : <ChevronDown size={20} />}
+                    {config.admin_role_id && (
+                      <button 
+                        onClick={() => clearField('admin_role_id')} 
+                        className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-1 sm:p-2 h-10 flex items-center"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
+                    <button 
+                      onClick={handleOpenRoleSelect} 
+                      className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-1 sm:p-2 h-10 flex items-center" 
+                      disabled={rolesLoading}
+                    >
+                      {rolesLoading ? (
+                        <span className="loading loading-spinner loading-xs"></span>
+                      ) : (
+                        <ChevronDown size={18} />
+                      )}
                     </button>
                   </div>
                 </div>
 
-                {/* AI IMPROVED REASONS TOGGLE */}
                 <div className="flex items-center justify-between pt-1">
                   <div className="flex-grow">
                     <span className="text-sm font-medium text-gray-300 flex items-center">
@@ -490,32 +531,41 @@ export default function ConfigureBot() {
                 </div>
 
                 <div>
-                  <label className=" font-medium mb-1 text-gray-300 flex items-center">
+                  <label className="font-medium mb-1 text-gray-300 flex items-center">
                     <BellRing size={16} className="mr-1 text-orange-400" /> OFFENSE DETECTOR WITH AI</label>
-                  <div className="relative flex items-center gap-2">
+                  <div className="relative flex items-center gap-1">
                     <input
                       type="text"
                       readOnly
                       value={getOffenseDetectorLabel(config.offense_detect)}
                       onClick={() => setShowOffenseDetectorSelect(true)}
-                      className="input input-bordered bg-black/30 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500"
+                      className="input input-bordered bg-black/30 rounded-lg flex-1 h-10 text-white placeholder-gray-500 cursor-pointer focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base"
                       placeholder="Not Selected"
                     />
-                    <button onClick={() => clearField('offense_detect')} className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-2 h-10 flex items-center" disabled={config.offense_detect === null}><X size={20} /></button>
-                    <button onClick={() => setShowOffenseDetectorSelect(true)} className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-2 h-10 flex items-center">
-                      <ChevronDown size={20} />
+                    {config.offense_detect !== null && (
+                      <button 
+                        onClick={() => clearField('offense_detect')} 
+                        className="btn btn-ghost btn-sm text-gray-400 hover:text-red-400 p-1 sm:p-2 h-10 flex items-center"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
+                    <button 
+                      onClick={() => setShowOffenseDetectorSelect(true)} 
+                      className="btn btn-ghost btn-sm text-gray-400 hover:text-white p-1 sm:p-2 h-10 flex items-center"
+                    >
+                      <ChevronDown size={18} />
                     </button>
                   </div>
                 </div>
-
               </div>
             </div>
           )}
 
-         
+          {/* Channel Select Modal */}
           {showChannelSelect.visible && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-              <div className="bg-black/80 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 p-6 rounded-lg max-w-md w-full max-h-[80vh] flex flex-col shadow-2xl">
+              <div className="bg-black/80 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 p-4 sm:p-6 rounded-lg max-w-md w-full max-h-[80vh] flex flex-col shadow-2xl">
                 <h3 className="text-lg font-semibold mb-4 text-gray-100 flex items-center">
                   <Hash size={20} className="mr-2 text-gray-400" /> Channel Selector
                 </h3>
@@ -530,12 +580,12 @@ export default function ConfigureBot() {
                         channels.map(channel => (
                           <div
                             key={channel.id}
-                            className="p-2.5 hover:bg-white/10 rounded-lg cursor-pointer flex items-center text-gray-300 hover:text-white transition-colors duration-150"
+                            className="p-2 sm:p-2.5 hover:bg-white/10 rounded-lg cursor-pointer flex items-center text-gray-300 hover:text-white transition-colors duration-150 text-sm sm:text-base"
                             onClick={() => handleChannelSelect(channel.id)}
                           >
                             <Hash size={16} className="mr-2 text-gray-500" />
-                            <span>{channel.name}</span>
-                            <span className="ml-auto text-xs text-gray-500 font-mono">{channel.id}</span>
+                            <span className="truncate">{channel.name}</span>
+                            <span className="ml-auto text-xs text-gray-500 font-mono hidden sm:inline">{channel.id}</span>
                           </div>
                         ))
                       ) : (
@@ -546,10 +596,10 @@ export default function ConfigureBot() {
                       )}
                     </div>
                     <button
-                      className="mt-6 self-end px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 shadow-md flex items-center justify-center"
+                      className="mt-6 self-end px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 shadow-md flex items-center justify-center text-sm sm:text-base"
                       onClick={() => setShowChannelSelect({ type: 'ai_channel_id', visible: false })}
                     >
-                      <X size={20} className="mr-2" /> Close Form
+                      <X size={18} className="mr-1 sm:mr-2" /> Close
                     </button>
                   </>
                 )}
@@ -557,10 +607,10 @@ export default function ConfigureBot() {
             </div>
           )}
 
-
+          {/* Role Select Modal */}
           {showRoleSelect && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-              <div className="bg-black/80 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 p-6 rounded-lg max-w-md w-full max-h-[80vh] flex flex-col shadow-2xl">
+              <div className="bg-black/80 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 p-4 sm:p-6 rounded-lg max-w-md w-full max-h-[80vh] flex flex-col shadow-2xl">
                 <h3 className="text-lg font-semibold mb-4 text-gray-100 flex items-center">
                   <Crown size={20} className="mr-2 text-gray-400" /> Role Selector
                 </h3>
@@ -575,15 +625,15 @@ export default function ConfigureBot() {
                         roles.map(role => (
                           <div
                             key={role.id}
-                            className="p-2.5 hover:bg-white/10 rounded-lg cursor-pointer flex items-center text-gray-300 hover:text-white transition-colors duration-150"
+                            className="p-2 sm:p-2.5 hover:bg-white/10 rounded-lg cursor-pointer flex items-center text-gray-300 hover:text-white transition-colors duration-150 text-sm sm:text-base"
                             onClick={() => handleRoleSelect(role.id)}
                           >
                             <div
-                                className="w-4 h-4 rounded-full mr-3"
+                                className="w-3 h-3 rounded-full mr-2 sm:mr-3"
                                 style={{ backgroundColor: role.color ? `#${role.color.toString(16).padStart(6, '0')}` : '#99aab5' }} 
                             ></div>
-                            <span>{role.name}</span>
-                            <span className="ml-auto text-xs text-gray-500 font-mono">{role.id}</span>
+                            <span className="truncate">{role.name}</span>
+                            <span className="ml-auto text-xs text-gray-500 font-mono hidden sm:inline">{role.id}</span>
                           </div>
                         ))
                       ) : (
@@ -594,10 +644,10 @@ export default function ConfigureBot() {
                       )}
                     </div>
                     <button
-                      className="mt-6 self-end px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 shadow-md flex items-center justify-center"
+                      className="mt-6 self-end px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 shadow-md flex items-center justify-center text-sm sm:text-base"
                       onClick={() => setShowRoleSelect(false)}
                     >
-                      <X size={20} className="mr-2" /> Close Form
+                      <X size={18} className="mr-1 sm:mr-2" /> Close
                     </button>
                   </>
                 )}
@@ -605,18 +655,18 @@ export default function ConfigureBot() {
             </div>
           )}
 
-      
+          {/* Offense Detector Modal */}
           {showOffenseDetectorSelect && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
-              <div className="bg-black/80 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 p-6 rounded-lg max-w-md w-full flex flex-col shadow-2xl">
+              <div className="bg-black/80 border-2 border-b-purple-500/70 border-t-blue-500/50 border-l-purple-500/50 border-r-blue-500/80 p-4 sm:p-6 rounded-lg max-w-md w-full flex flex-col shadow-2xl">
                 <h3 className="text-lg font-semibold mb-4 text-gray-100 flex items-center">
                   <BellRing size={20} className="mr-2 text-orange-400" /> Offense Detector Level
                 </h3>
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {offenseLevels.map((level) => (
                     <div
                       key={level.value}
-                      className={`p-3 rounded-lg cursor-pointer flex items-center transition-colors duration-150
+                      className={`p-2 sm:p-3 rounded-lg cursor-pointer flex items-center transition-colors duration-150 text-sm sm:text-base
                       ${
                         config?.offense_detect === level.value
                           ? level.value === 0
@@ -629,24 +679,23 @@ export default function ConfigureBot() {
                       onClick={() => handleOffenseDetectorSelect(level.value)}
                     >
                       {level.icon}
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-lg">{level.label}</h4>
-                        <p className="text-sm text-gray-300 mt-1">{level.description}</p>
+                      <div className="flex-1 ml-2">
+                        <h4 className="font-semibold text-sm sm:text-lg">{level.label}</h4>
+                        <p className="text-xs text-gray-300 mt-1">{level.description}</p>
                       </div>
-                      {config?.offense_detect === level.value && <UserCheck size={24} className="ml-4 text-white" />}
+                      {config?.offense_detect === level.value && <UserCheck size={20} className="ml-2 sm:ml-4 text-white" />}
                     </div>
                   ))}
                 </div>
                 <button
-                  className="mt-6 self-end px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 shadow-md flex items-center justify-center"
+                  className="mt-6 self-end px-3 py-1.5 sm:px-4 sm:py-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white rounded-lg transition-all duration-200 shadow-md flex items-center justify-center text-sm sm:text-base"
                   onClick={() => setShowOffenseDetectorSelect(false)}
                 >
-                  <X size={20} className="mr-2" /> Close Form
+                  <X size={18} className="mr-1 sm:mr-2" /> Close
                 </button>
               </div>
             </div>
           )}
-
         </div>
       </div>
     </>
