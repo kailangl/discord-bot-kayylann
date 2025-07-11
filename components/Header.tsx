@@ -10,6 +10,7 @@ import {
   LayoutDashboard,
   LogIn,
   Home as HomeIcon,
+  Award, 
   Menu,
   X,
 } from "lucide-react";
@@ -19,18 +20,17 @@ const Header = () => {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-
   const handleLogin = async () => {
     try {
-      await signIn('discord'); 
+      await signIn('discord');
     } catch (err) {
       console.error("Error during Discord sign-in:", err);
- 
     }
   };
 
   const navItems = [
     { href: "/", label: "Home", icon: <HomeIcon className="w-4 h-4" /> },
+    { href: "/reward", label: "Rewards", icon: <Award className="w-4 h-4" /> }, // Added Rewards link
     { href: "/help", label: "Help", icon: <HandHelping className="w-4 h-4" /> },
     { href: "/commands", label: "Commands", icon: <GitGraph className="w-4 h-4" /> },
     { href: "/about", label: "About Us", icon: <Info className="w-4 h-4" /> },
@@ -124,7 +124,7 @@ const Header = () => {
             ) : (
               <div className="hidden md:block">
                 <button
-                  onClick={handleLogin} 
+                  onClick={handleLogin}
                   className="text-white font-medium py-2 px-4 rounded-lg flex items-center gap-2 transition-all duration-200 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400 shadow-lg hover:shadow-purple-500/30 text-sm"
                 >
                   <LogIn className="w-5 h-5" />
@@ -183,7 +183,7 @@ const Header = () => {
               <>
                 <div className="border-t border-white/10 my-3"></div>
                 <button
-                  onClick={handleLogin} 
+                  onClick={handleLogin}
                   className="w-full text-white font-medium py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-200 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-500 hover:to-blue-400 shadow-lg text-sm"
                 >
                   <LogIn className="w-5 h-5" />
