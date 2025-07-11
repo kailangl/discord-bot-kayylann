@@ -343,7 +343,7 @@ export default function RewardPage() {
                 <input
                   type="text"
                   value={code}
-                  onChange={(e) => setCode(e.target.value.toUpperCase())}
+                  onChange={(e) => setCode(e.target.value.toLowerCase())}
                   placeholder="Enter your code here"
                   className="w-full p-4 rounded-lg bg-black/30 text-white placeholder-gray-400 border border-gray-600 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all text-lg"
                 />
