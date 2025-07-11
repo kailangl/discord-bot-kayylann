@@ -112,12 +112,13 @@ const Help: NextPage = () => {
         <title>Lunny Help Center</title>
         <meta name="description" content="Help center for the Lunny Discord bot" />
         <link rel="icon" href="/favicon.ico" />
+      
       </Head>
 
       <Header />
 
       <main className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
+        
         <section className="py-12 md:py-16">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-extrabold mb-6">
